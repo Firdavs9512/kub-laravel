@@ -1,0 +1,35 @@
+name: Deploy to GKE
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          version: '340.0.0'
+          service_account_key: ${{ secrets.GKE_SA_KEY }}
+          project_id: <your-project-id>
+
+      - name: Configure Docker to use gcloud command-line tool as a Docker credential helper
+        run: |
+          gcloud auth configure-docker
+
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT }}/your-app:$GITHUB_SHA .
+          docker push gcr.io/${{ secrets.GCP_PROJECT }}/your-app:$GITHUB_SHA
+
+      - name: Deploy to GKE
+        run: |
+          gcloud container clusters get-credentials kub-laravel --zone us-east1
+          kubectl apply -f path/to/your/kubernetes/yaml/files
