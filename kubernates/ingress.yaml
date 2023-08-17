@@ -4,7 +4,7 @@ metadata:
   name: laravel-ingress
 spec:
   rules:
-    - host: dev.earn-money.uz  # Update this to your desired host
+    - host: kub-laravel.local  # Update this to your desired host
       http:
         paths:
           - path: /
