@@ -14,11 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $sum = 0;
-
-    for ($i = 0; $i < 100000000; $i++) {
-        $sum += $i;
-    }
+    $sum = 100;
 
     return view('welcome')->with('sum', $sum);
 });

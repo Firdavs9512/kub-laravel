@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: laravel-container
-          image: nobody9512/kub-laravel:v0.5.1
+          image: nobody9512/kub-laravel:v0.5.2
           ports:
             - containerPort: 9000
           resources:
